@@ -34,6 +34,8 @@ COL_NAME = 'sent'
 
 # Import data
 data_df = pd.read_csv(IN_FNAME)
+#my code: sanitize csv to not have nan values
+data_df = data_df.fillna('')
 
 # Initialise column with texts to classify
 if args.column:
@@ -51,13 +53,14 @@ sent_classif = classify_texts(sentences, MODEL_FNAME)
 data_df['regulatory_according_to_inlegalbert'] = sent_classif
 
 # Extract the two columns you want to compare
-rater_columns = ['regulatory_according_to_rule', 'regulatory_according_to_inlegalbert']
-data_to_compare = data_df[rater_columns]
+#rater_columns = ['label', 'regulatory_according_to_inlegalbert']
+
+#data_to_compare = data_df[rater_columns]
 
 # # Calculate Krippendorff's alpha for the selected columns
-# alpha_value = alpha(data=data_to_compare, level_of_measurement='interval')
+#alpha_value = alpha(data=data_to_compare, level_of_measurement='interval')
 
-# print(f"Krippendorff's alpha: {alpha_value:.2f}")
+#print(f"Krippendorff's alpha: {alpha_value:.2f}")
 
 # Save the new dataframe to file
 data_df.to_csv(OUT_FNAME, index=False)
